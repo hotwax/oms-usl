@@ -38,9 +38,9 @@ along with this software (see the LICENSE.md file). If not, see
             <parameter name="orderItemWithChildrenSet" type="Set"><parameter name="orderItemSeqId"/></parameter>
             <parameter name="productItemTypes" type="List"><parameter name="itemTypeEnumId"/></parameter>
 
-            <parameter name="orderPromoCodeDetailList" type="List"><parameter name="orderPromoCode" type="Map"/></parameter>
-            <parameter name="paymentList" type="List"><parameter name="payment" type="Map">
-                <auto-parameters entity-name="mantle.account.payment.Payment"/></parameter></parameter>
+<!--            <parameter name="orderPromoCodeDetailList" type="List"><parameter name="orderPromoCode" type="Map"/></parameter>-->
+            <!--<parameter name="paymentList" type="List"><parameter name="payment" type="Map">
+                <auto-parameters entity-name="mantle.account.payment.Payment"/></parameter></parameter>-->
 
             <parameter name="shipmentItemSourceList" type="List"><parameter name="sis" type="Map">
                 <auto-parameters entity-name="mantle.shipment.ShipmentItemSource"/></parameter></parameter>
@@ -50,9 +50,9 @@ along with this software (see the LICENSE.md file). If not, see
             <parameter name="quantityNotShippedByPart" type="Map">
                 <description>Key is orderPartSeqId, value is quantity not shipped for all items in part.</description></parameter>
 
-            <parameter name="orderItemBillingList" type="List"><parameter name="oib" type="Map">
-                <auto-parameters entity-name="mantle.order.OrderItemBilling"/></parameter></parameter>
-            <parameter name="invoiceIdSet" type="Set"><parameter name="invoiceId"/></parameter>
+            <!--<parameter name="orderItemBillingList" type="List"><parameter name="oib" type="Map">
+                <auto-parameters entity-name="mantle.order.OrderItemBilling"/></parameter></parameter>-->
+<!--            <parameter name="invoiceIdSet" type="Set"><parameter name="invoiceId"/></parameter>-->
             <parameter name="quantityNotBilledByItem" type="Map">
                 <description>Key is orderItemSeqId, value is quantity not billed for item.</description></parameter>
             <parameter name="totalNotBilledByItem" type="Map">
@@ -63,9 +63,9 @@ along with this software (see the LICENSE.md file). If not, see
             <parameter name="returnItemList" type="List"><parameter name="returnItem" type="Map">
                 <auto-parameters entity-name="mantle.order.return.ReturnItem"/></parameter></parameter>
 
-            <parameter name="requestItemOrderList" type="List"><parameter name="rio" type="Map">
+            <!--<parameter name="requestItemOrderList" type="List"><parameter name="rio" type="Map">
                 <auto-parameters entity-name="mantle.request.RequestItemOrder"/></parameter></parameter>
-            <parameter name="requestIdSet" type="Set"><parameter name="requestId"/></parameter>
+            <parameter name="requestIdSet" type="Set"><parameter name="requestId"/></parameter>-->
 
             <parameter name="statusHistoryList" type="List"><parameter name="auditLog" type="Map">
                 <auto-parameters entity-name="moqui.entity.EntityAuditLog"/></parameter></parameter>
@@ -92,9 +92,9 @@ along with this software (see the LICENSE.md file). If not, see
                 <parameter name="shipmentMethodEnum" type="Map">
                     <auto-parameters entity-name="moqui.basic.Enumeration"/></parameter>
                 <parameter name="carrierPartyDetail" type="Map"/>
-                <parameter name="partPaymentList" type="List"><parameter name="partPayment" type="Map">
-                    <auto-parameters entity-name="mantle.account.payment.Payment"/></parameter></parameter>
-                <parameter name="partPaymentInfoList" type="List"><parameter name="partPaymentInfo" type="Map">
+<!--                <parameter name="partPaymentList" type="List"><parameter name="partPayment" type="Map">-->
+<!--                    <auto-parameters entity-name="mantle.account.payment.Payment"/></parameter></parameter>-->
+                <!--<parameter name="partPaymentInfoList" type="List"><parameter name="partPaymentInfo" type="Map">
                     <parameter name="partPayment" type="Map"><auto-parameters entity-name="mantle.account.payment.Payment"/></parameter>
                     <parameter name="statusItem" type="Map"><auto-parameters entity-name="moqui.basic.StatusItem"/></parameter>
                     <parameter name="paymentMethod" type="Map"><auto-parameters entity-name="mantle.account.method.PaymentMethod"/></parameter>
@@ -107,7 +107,7 @@ along with this software (see the LICENSE.md file). If not, see
                     <parameter name="paymentMethodTypeEnum" type="Map"><auto-parameters entity-name="moqui.basic.Enumeration"/></parameter>
                     <parameter name="paymentInstrumentEnum" type="Map"><auto-parameters entity-name="moqui.basic.Enumeration"/></parameter>
                     <parameter name="paymentTypeEnum" type="Map"><auto-parameters entity-name="moqui.basic.Enumeration"/></parameter>
-                </parameter></parameter>
+                </parameter></parameter>-->
                 <parameter name="paymentsTotal" type="BigDecimal"/>
                 <parameter name="partTotalUnpaid" type="BigDecimal"/>
                 <parameter name="postalAddress" type="Map">
@@ -241,11 +241,11 @@ along with this software (see the LICENSE.md file). If not, see
             </entity-find>
 
             <!-- get orderPromoCodeDetailList -->
-            <entity-find entity-name="mantle.product.store.OrderPromoCodeDetail" list="orderPromoCodeDetailList">
-                <econdition field-name="orderId"/></entity-find>
+            <!--<entity-find entity-name="mantle.product.store.OrderPromoCodeDetail" list="orderPromoCodeDetailList">
+                <econdition field-name="orderId"/></entity-find>-->
             <!-- get paymentList -->
-            <entity-find-related value-field="orderHeader" relationship-name="mantle.account.payment.Payment"
-                    list="paymentList" order-by-list="['paymentId']"/>
+            <!--<entity-find-related value-field="orderHeader" relationship-name="mantle.account.payment.Payment"
+                    list="paymentList" order-by-list="['paymentId']"/>-->
 
             <!-- get ShipmentItemSource list and derived data -->
             <entity-find entity-name="mantle.shipment.ShipmentAndItemSource" list="shipmentItemSourceList">
@@ -276,9 +276,9 @@ along with this software (see the LICENSE.md file). If not, see
 
             <!-- get OrderItemBilling list and derived data -->
             <!-- TODO: exclude OrderItemBilling records for cancelled invoices -->
-            <entity-find entity-name="mantle.order.OrderItemBilling" list="orderItemBillingList">
-                <econdition field-name="orderId"/><order-by field-name="orderItemSeqId"/></entity-find>
-            <set field="invoiceIdSet" from="new TreeSet()"/>
+            <!--<entity-find entity-name="mantle.order.OrderItemBilling" list="orderItemBillingList">
+                <econdition field-name="orderId"/><order-by field-name="orderItemSeqId"/></entity-find>-->
+<!--            <set field="invoiceIdSet" from="new TreeSet()"/>-->
             <set field="quantityNotBilledByItem" from="[:]"/>
             <set field="totalNotBilledByItem" from="[:]"/>
             <set field="quantityNotBilledByPart" from="[:]"/>
@@ -289,7 +289,7 @@ along with this software (see the LICENSE.md file). If not, see
                 addToBigDecimalInMap(orderItem.orderItemSeqId, orderItemTotal, totalNotBilledByItem)
                 addToBigDecimalInMap(orderItem.orderPartSeqId, orderItemQuantity, quantityNotBilledByPart)
             ]]></script></iterate>
-            <iterate list="orderItemBillingList" entry="orderItemBilling"><script><![CDATA[
+            <!--<iterate list="orderItemBillingList" entry="orderItemBilling"><script><![CDATA[
                 def curOrderItem = orderItemList.find({ it.orderItemSeqId == orderItemBilling.orderItemSeqId })
                 invoiceIdSet.add(orderItemBilling.invoiceId)
                 if (curOrderItem != null) {
@@ -301,7 +301,7 @@ along with this software (see the LICENSE.md file). If not, see
                     def billedTotal = ec.l10n.roundCurrency(billedQuantity * (curInvoiceItem?.amount ?: 0.0), orderHeader.currencyUomId)
                     addToBigDecimalInMap(curOrderItem.orderItemSeqId, -billedTotal, totalNotBilledByItem)
                 }
-            ]]></script></iterate>
+            ]]></script></iterate>-->
 
             <!-- get ReturnItem list -->
             <entity-find entity-name="mantle.order.return.ReturnItem" list="returnItemList">
@@ -311,11 +311,11 @@ along with this software (see the LICENSE.md file). If not, see
             </entity-find>
 
             <!-- get RequestItemOrder list and derived data -->
-            <entity-find entity-name="mantle.request.RequestItemOrder" list="requestItemOrderList">
+            <!--<entity-find entity-name="mantle.request.RequestItemOrder" list="requestItemOrderList">
                 <econdition field-name="orderId"/></entity-find>
             <set field="requestIdSet" from="new TreeSet()"/>
             <iterate list="requestItemOrderList" entry="requestItemOrder">
-                <script>requestIdSet.add(requestItemOrder.requestId)</script></iterate>
+                <script>requestIdSet.add(requestItemOrder.requestId)</script></iterate>-->
 
             <!-- get order status history from EntityAuditLog -->
             <entity-find entity-name="moqui.entity.EntityAuditLog" list="statusHistoryList">
@@ -357,7 +357,7 @@ along with this software (see the LICENSE.md file). If not, see
             orderPartInfoList = []
             for (EntityValue orderPart in orderPartList) {
                 EntityValue partStatusItem = (EntityValue) orderPart.status
-                EntityValue partSettlementTerm = (EntityValue) orderPart.settlementTerm
+                //EntityValue partSettlementTerm = (EntityValue) orderPart.settlementTerm
 
                 EntityList partOrderItemList = orderItemList.findAll({ it.orderPartSeqId == orderPart.orderPartSeqId })
                 EntityList partNoParentOrderItemList = partOrderItemList.findAll({ it.parentItemSeqId == null })
@@ -414,7 +414,7 @@ along with this software (see the LICENSE.md file). If not, see
                         else if (partPayment.toPartyId == billToPartyId)
                             paymentsTotal -= (partPayment.amount ?: 0.0)
                     }
-                    Map partPaymentInfo = [partPayment:partPayment, statusItem:partPayment.status]
+                   /* Map partPaymentInfo = [partPayment:partPayment, statusItem:partPayment.status]
                     EntityValue paymentMethod = (EntityValue) partPayment.method
                     if (paymentMethod != null) {
                         partPaymentInfo.paymentMethod = paymentMethod
@@ -431,6 +431,7 @@ along with this software (see the LICENSE.md file). If not, see
                     partPaymentInfo.paymentInstrumentEnum = partPayment.instrument
                     partPaymentInfo.paymentTypeEnum = partPayment.type
                     partPaymentInfoList.add(partPaymentInfo)
+                    */
                 }
                 BigDecimal partTotalUnpaid = (orderPart.partTotal ?: 0.0) - (paymentsTotal ?: 0.0)
 
@@ -477,13 +478,14 @@ along with this software (see the LICENSE.md file). If not, see
                         .parameters([orderId:orderPart.orderId, orderPartSeqId:orderPart.orderPartSeqId]).call()
 
                 orderPartInfoList.add([orderPart:orderPart, partEditable:editableStatusIds.contains(orderPart.statusId),
-                        partStatusItem:partStatusItem, partSettlementTerm:partSettlementTerm,
+                        //partStatusItem:partStatusItem, partSettlementTerm:partSettlementTerm,
                         partOrderItemList:partOrderItemList, partNoParentOrderItemList:partNoParentOrderItemList,
                         partNoParentOrderItemCount:partNoParentOrderItemCount,
                         hasShippableItems:hasShippableItems, singleLot:singleLot, newerInventory:newerInventory,
                         carrierPartyDetail:carrierPartyDetail,
                         shipmentMethodEnum:orderPart."ShipmentMethod#moqui.basic.Enumeration",
-                        partPaymentList:partPaymentList, partPaymentInfoList:partPaymentInfoList,
+                        partPaymentList:partPaymentList,
+                        //partPaymentInfoList:partPaymentInfoList,
                         paymentsTotal:paymentsTotal, partTotalUnpaid:partTotalUnpaid,
                         postalAddress:postalAddress, postalAddressStateGeo:postalAddressStateGeo,
                         telecomNumber:telecomNumber, facility:facility,
@@ -638,20 +640,20 @@ along with this software (see the LICENSE.md file). If not, see
             <set field="itemQuantityShipped" from="shipmentItemSourceList ? shipmentItemSourceList*.quantity.sum() : 0.0"/>
             <set field="itemQuantityNotShipped" from="orderItemQuantity - itemQuantityShipped"/>
 
-            <entity-find entity-name="mantle.order.OrderItemBilling" list="orderItemBillingList">
+            <!--<entity-find entity-name="mantle.order.OrderItemBilling" list="orderItemBillingList">
                 <econdition field-name="orderId"/>
                 <econdition field-name="orderItemSeqId"/>
-            </entity-find>
+            </entity-find>-->
 
             <set field="itemQuantityBilled" from="0.0"/>
             <set field="itemAmountBilled" from="0.0"/>
-            <iterate list="orderItemBillingList" entry="orderItemBilling">
+            <!--<iterate list="orderItemBillingList" entry="orderItemBilling">
                 <set field="billedQuantity" from="orderItemBilling.quantity != null ? orderItemBilling.quantity : 1.0"/>
                 <set field="itemQuantityBilled" from="itemQuantityBilled + billedQuantity"/>
 
                 <set field="curInvoiceItem" from="orderItemBilling.invoiceItem"/>
                 <set field="itemAmountBilled" from="itemAmountBilled + ((billedQuantity * (curInvoiceItem?.amount ?: 0.0)).setScale(2, BigDecimal.ROUND_HALF_UP))"/>
-            </iterate>
+            </iterate>-->
 
             <set field="itemQuantityNotBilled" from="orderItemQuantity - itemQuantityBilled"/>
             <set field="itemAmountNotBilled" from="orderItemTotal - itemAmountBilled"/>
@@ -702,7 +704,7 @@ along with this software (see the LICENSE.md file). If not, see
                 <order-by field-name="orderItemSeqId"/>
             </entity-find>
             <service-call name="mantle.order.ReturnServices.calculate#OrderItemReturnable" out-map="returnableOut"
-                    in-map="[orderId:orderItem.orderId, orderItemSeqId:orderItem.orderItemSeqId, orderItemBillingList:orderItemBillingList, returnItemList:returnItemList]"/>
+                    in-map="[orderId:orderItem.orderId, orderItemSeqId:orderItem.orderItemSeqId, returnItemList:returnItemList]"/>
             <set field="returnIdSet" from="new TreeSet()"/>
             <iterate list="returnItemList" entry="returnItem">
                 <if condition="returnItem.orderItemSeqId != orderItemSeqId"><continue/></if>
@@ -751,17 +753,17 @@ along with this software (see the LICENSE.md file). If not, see
 
             <!-- Payment/PaymentMethod -->
             <if condition="!postalContactMechIdList">
-                <entity-find entity-name="mantle.account.payment.Payment" list="paymentList">
+                <!--<entity-find entity-name="mantle.account.payment.Payment" list="paymentList">
                     <econdition field-name="orderId"/><econdition field-name="orderPartSeqId"/>
                     <econdition field-name="paymentMethodId" operator="is-not-null"/>
-                </entity-find>
-                <if condition="paymentList">
+                </entity-find>-->
+                <!--<if condition="paymentList">
                     <entity-find entity-name="mantle.account.method.PaymentMethod" list="paymentMethodList">
                         <econdition field-name="paymentMethodId" operator="in" from="paymentList*.paymentMethodId"/>
                         <econdition field-name="postalContactMechId" operator="is-not-null"/>
                     </entity-find>
                     <script>postalContactMechIdList.addAll(paymentMethodList*.postalContactMechId)</script>
-                </if>
+                </if>-->
             </if>
 
             <!-- if none found get billing address for CustomerBillTo or customerPartyId -->
@@ -838,7 +840,7 @@ along with this software (see the LICENSE.md file). If not, see
             <set field="isVendorInternalOrg" from="vendorOrgInternal != null"/>
 
             <!-- check payments for sufficient authorized, promised (or later statuses for each) -->
-            <set field="totalPromised" from="0"/>
+            <!--<set field="totalPromised" from="0"/>
             <set field="totalAuthorized" from="0"/>
             <entity-find entity-name="mantle.account.payment.Payment" list="paymentList">
                 <econdition field-name="orderId"/></entity-find>
@@ -858,7 +860,7 @@ along with this software (see the LICENSE.md file). If not, see
             <if condition="totalPromised &lt; orderHeader.grandTotal">
                 <script>approveWarnings.add(ec.resource.expand('OrderApprovePaymentPromisedLow', null))</script></if>
             <if condition="totalAuthorized &lt; orderHeader.grandTotal">
-                <script>approveWarnings.add(ec.resource.expand('OrderApprovePaymentAuthorizedLow', null))</script></if>
+                <script>approveWarnings.add(ec.resource.expand('OrderApprovePaymentAuthorizedLow', null))</script></if>-->
 
             <!-- don't go beyond here if there is no customer or vendor -->
             <set field="noCustomerOrVendor" from="false"/>
@@ -875,8 +877,8 @@ along with this software (see the LICENSE.md file). If not, see
             <if condition="noCustomerOrVendor"><return/></if>
 
             <!-- get all PaymentMethods -->
-            <entity-find entity-name="mantle.account.method.PaymentMethod" list="paymentMethodList">
-                <econdition field-name="paymentMethodId" operator="in" from="paymentMethodIdSet"/></entity-find>
+            <!--<entity-find entity-name="mantle.account.method.PaymentMethod" list="paymentMethodList">
+                <econdition field-name="paymentMethodId" operator="in" from="paymentMethodIdSet"/></entity-find>-->
 
             <!-- get all billing addresses -->
             <set field="billingAddressIdSet" from="new HashSet(paymentMethodList*.postalContactMechId)"/>

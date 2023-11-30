@@ -37,8 +37,8 @@ along with this software (see the LICENSE.md file). If not, see
             <parameter name="shippingShipmentIdSet" type="Set"><parameter name="shippingShipmentId"/></parameter>
 
             <parameter name="refundPaymentIdSet" type="Set"><parameter name="refundPaymentId"/></parameter>
-            <parameter name="returnItemBillingList" type="List"><parameter name="returnItemBilling" type="Map"/></parameter>
-            <parameter name="creditMemoIdSet" type="Set"><parameter name="invoiceId"/></parameter>
+<!--            <parameter name="returnItemBillingList" type="List"><parameter name="returnItemBilling" type="Map"/></parameter>-->
+<!--            <parameter name="creditMemoIdSet" type="Set"><parameter name="invoiceId"/></parameter>-->
         </out-parameters>
         <actions>
             <entity-find-one entity-name="mantle.order.return.ReturnHeader" value-field="returnHeader"/>
@@ -91,9 +91,9 @@ along with this software (see the LICENSE.md file). If not, see
                 else { shippingShipmentIdSet.add(sis.shipmentId)}
             </script></iterate>
 
-            <entity-find entity-name="mantle.order.return.ReturnItemBilling" list="returnItemBillingList">
+            <!--<entity-find entity-name="mantle.order.return.ReturnItemBilling" list="returnItemBillingList">
                 <econdition field-name="returnId"/><order-by field-name="returnItemSeqId"/></entity-find>
-            <set field="creditMemoIdSet" from="new TreeSet(returnItemBillingList*.invoiceId)"/>
+            <set field="creditMemoIdSet" from="new TreeSet(returnItemBillingList*.invoiceId)"/>-->
         </actions>
     </service>
 
@@ -153,13 +153,13 @@ along with this software (see the LICENSE.md file). If not, see
 
             <if condition="!shipmentMethodEnumId"><set field="shipmentMethodEnumId" from="orderPart.shipmentMethodEnumId"/></if>
             <if condition="!carrierPartyId"><set field="carrierPartyId" from="orderPart.carrierPartyId"/></if>
-            <if condition="!paymentMethodId">
+            <!--<if condition="!paymentMethodId">
                 <entity-find entity-name="mantle.account.payment.Payment" list="paymentList">
                     <econdition field-name="orderId"/><econdition field-name="orderPartSeqId"/></entity-find>
                 <iterate list="paymentList" entry="payment"><if condition="payment.paymentMethodId">
                     <set field="paymentMethodId" from="payment.paymentMethodId"/></if></iterate>
             </if>
-
+-->
             <set field="visitId" from="ec.user.visitId"/>
             <service-call name="create#mantle.order.return.ReturnHeader" in-map="context" out-map="context"/>
         </actions>
@@ -268,7 +268,7 @@ along with this software (see the LICENSE.md file). If not, see
             <parameter name="orderId" required="true"/>
             <parameter name="orderItemSeqId" required="true"/>
             <parameter name="orderItem" type="Map"/>
-            <parameter name="orderItemBillingList" type="List"><parameter name="oib" type="Map"/></parameter>
+<!--            <parameter name="orderItemBillingList" type="List"><parameter name="oib" type="Map"/></parameter>-->
             <parameter name="returnItemList" type="List"><parameter name="returnItem" type="Map"/></parameter>
         </in-parameters>
         <out-parameters>
@@ -298,12 +298,12 @@ along with this software (see the LICENSE.md file). If not, see
 
             <set field="invoiceQuantity" from="0"/>
             <set field="invoiceTotal" from="0.0"/>
-            <if condition="orderItemBillingList == null">
+            <!--<if condition="orderItemBillingList == null">
                 <entity-find entity-name="mantle.order.OrderItemBilling" list="orderItemBillingList">
                     <econdition field-name="orderId"/><econdition field-name="orderItemSeqId"/></entity-find>
-            </if>
-            <iterate list="orderItemBillingList" entry="oib">
-                <!-- check for when orderItemBillingList is passed in -->
+            </if>-->
+            <!--<iterate list="orderItemBillingList" entry="oib">
+                &lt;!&ndash; check for when orderItemBillingList is passed in &ndash;&gt;
                 <if condition="oib.orderId != orderId || oib.orderItemSeqId != orderItemSeqId"><continue/></if>
                 <if condition="oib.quantity == 0.0"><continue/></if>
 
@@ -315,7 +315,7 @@ along with this software (see the LICENSE.md file). If not, see
                     <field-map field-name="invoiceItemSeqId" from="oib.invoiceItemSeqId"/>
                 </entity-find-one>
                 <set field="invoiceTotal" from="invoiceTotal + (invQuantity * (invoiceItem?.amount ?: 0.0)).setScale(2, BigDecimal.ROUND_HALF_UP)"/>
-            </iterate>
+            </iterate>-->
 
             <set field="returnedQuantity" from="0.0"/>
             <set field="returnedTotal" from="0.0"/>
@@ -716,21 +716,21 @@ along with this software (see the LICENSE.md file). If not, see
                     <!-- create ReturnItemBilling records to connect ReturnItem and InvoiceItem -->
 
                     <!-- create return credit memo Invoice if needed -->
-                    <if condition="!returnInvoiceId">
+                    <!--<if condition="!returnInvoiceId">
                         <service-call name="mantle.account.InvoiceServices.create#Invoice" out-map="returnInvoiceOut" out-map-add-to-existing="false"
                                 in-map="[fromPartyId:returnHeader.customerPartyId, toPartyId:returnHeader.vendorPartyId,
                                     invoiceTypeEnumId:'InvoiceReturn', invoiceDate:responseDate, currencyUomId:returnHeader.currencyUomId]"/>
                         <set field="returnInvoiceId" from="returnInvoiceOut.invoiceId"/>
                     </if>
-                    <!-- create return credit memo InvoiceItem -->
+                    &lt;!&ndash; create return credit memo InvoiceItem &ndash;&gt;
                     <service-call name="mantle.account.InvoiceServices.create#InvoiceItem" out-map="retInvItemOut" out-map-add-to-existing="false"
                             in-map="[invoiceId:returnInvoiceId, itemTypeEnumId:returnItem.itemTypeEnumId, description:returnItem.description,
                                 quantity:itemQuantity, amount:itemAmount, productId:returnItem.productId]"/>
-                    <!-- create ReturnItemBilling -->
-                    <!-- TODO populate assetReceiptId -->
+                    &lt;!&ndash; create ReturnItemBilling &ndash;&gt;
+                    &lt;!&ndash; TODO populate assetReceiptId &ndash;&gt;
                     <service-call name="create#mantle.order.return.ReturnItemBilling" in-map="[returnId:returnId,
                             returnItemSeqId:returnItem.returnItemSeqId, invoiceId:returnInvoiceId,
-                            invoiceItemSeqId:retInvItemOut.invoiceItemSeqId, quantity:itemQuantity, amount:itemAmount]"/>
+                            invoiceItemSeqId:retInvItemOut.invoiceItemSeqId, quantity:itemQuantity, amount:itemAmount]"/>-->
 
                     <!-- old approach: adjust original invoice
                     <entity-find entity-name="mantle.order.OrderItemBilling" list="oibList">
@@ -788,7 +788,7 @@ along with this software (see the LICENSE.md file). If not, see
                     <set field="returnItem.responseDate" from="responseDate"/>
                 </iterate>
 
-                <if condition="creditTotal">
+                <!--<if condition="creditTotal">
                     <set field="finAccountId" from="returnHeader.finAccountId"/>
                     <if condition="!finAccountId">
                         <service-call name="mantle.account.FinancialAccountServices.getOrCreate#FinancialAccount"
@@ -796,17 +796,17 @@ along with this software (see the LICENSE.md file). If not, see
                                 organizationPartyId:returnHeader.vendorPartyId]" out-map="context"/>
                     </if>
 
-                    <!-- create the FA Payment -->
+                    &lt;!&ndash; create the FA Payment &ndash;&gt;
                     <service-call name="mantle.account.PaymentServices.create#Payment" out-map="faPaymentOut" out-map-add-to-existing="false"
                             in-map="[paymentTypeEnumId:'PtInvoicePayment', statusId:'PmntAuthorized',
                                 paymentInstrumentEnumId:'PiFinancialAccount', finAccountId:finAccountId, effectiveDate:responseDate,
                                 fromPartyId:returnHeader.vendorPartyId, toPartyId:returnHeader.customerPartyId,
                                 amount:creditTotal, amountUomId:returnHeader.currencyUomId, forInvoiceId:returnInvoiceId]"/>
-                    <!-- deliver the FA Payment via FA Trans; NOTE: could also do via SECA on set payment status to Delivered -->
+                    &lt;!&ndash; deliver the FA Payment via FA Trans; NOTE: could also do via SECA on set payment status to Delivered &ndash;&gt;
                     <service-call name="mantle.account.FinancialAccountServices.checkCreate#PaymentTrans" out-map="faTxOut" out-map-add-to-existing="false"
                             in-map="[paymentId:faPaymentOut.paymentId, reasonEnumId:'FatrCsCredit']"/>
 
-                    <!-- set finAccountTransId and update all credit return items -->
+                    &lt;!&ndash; set finAccountTransId and update all credit return items &ndash;&gt;
                     <iterate list="faItemList" entry="returnItem">
                         <set field="returnItem.finAccountTransId" from="faTxOut.finAccountTransId"/>
                         <set field="returnItem.refundPaymentId" from="faPaymentOut.paymentId"/>
@@ -816,7 +816,7 @@ along with this software (see the LICENSE.md file). If not, see
                             <service-call name="mantle.order.ReturnServices.complete#ReturnItem"
                                     in-map="[returnId:returnId, returnItemSeqId:returnItem.returnItemSeqId]"/></if>
                     </iterate>
-                </if>
+                </if>-->
             </if>
             <!-- old approach, one direct FA transaction per item:
             <iterate list="creditItemList" entry="returnItem">
@@ -872,8 +872,8 @@ along with this software (see the LICENSE.md file). If not, see
                     <set field="returnItem.responseDate" from="responseDate"/>
                 </iterate>
 
-                <if condition="paymentTotal">
-                    <!-- lookup Return Refund PaymentMethod (BankAccount) for internal org (vendor) -->
+                <!--<if condition="paymentTotal">
+                    &lt;!&ndash; lookup Return Refund PaymentMethod (BankAccount) for internal org (vendor) &ndash;&gt;
                     <entity-find entity-name="mantle.account.method.PaymentMethod" list="paymentMethodList">
                         <date-filter/><econdition field-name="ownerPartyId" from="returnHeader.vendorPartyId"/>
                         <econdition field-name="purposeEnumId" value="PmpReturnRefund"/>
@@ -886,7 +886,7 @@ along with this software (see the LICENSE.md file). If not, see
                     </entity-find></if>
                     <if condition="paymentMethodList"><set field="paymentMethodId" from="paymentMethodList[0].paymentMethodId"/></if>
 
-                    <!-- handle other side of Payment, for each refund Payment here:
+                    &lt;!&ndash; handle other side of Payment, for each refund Payment here:
                         (may be multiple Payments applied to sales invoice, if some Delivered/Applied and others not then generate partial invoice if needed and reduce the undelivered payments?)
                         - if order Payment(s) in Delivered status
                           - NOTE: now always creating credit memo invoice instead of modifying, simplifies the logic here; always do 'else' with setting forInvoiceId
@@ -898,9 +898,9 @@ along with this software (see the LICENSE.md file). If not, see
                             - sales incoming payments in these statuses won't be applied to invoice so the sales invoice should have been adjusted above
                             - reduce Payment(s) amount as needed, if multiple instruments reduce CC before FinancialAccount (customer credits), etc
                           - TODO instead of Payment apply return credit memo invoice to sales invoice
-                    -->
+                    &ndash;&gt;
 
-                    <!-- NOTE: don't specify paymentInstrumentEnumId, create#Payment will determine from toPaymentMethodId or default to PiCompanyCheck (paymentInstrumentEnumId:'PiCompanyCheck',) -->
+                    &lt;!&ndash; NOTE: don't specify paymentInstrumentEnumId, create#Payment will determine from toPaymentMethodId or default to PiCompanyCheck (paymentInstrumentEnumId:'PiCompanyCheck',) &ndash;&gt;
                     <service-call name="mantle.account.PaymentServices.create#Payment" out-map="refundPmntOut" out-map-add-to-existing="false"
                         in-map="[paymentTypeEnumId:'PtRefund', statusId:'PmntPromised',
                             fromPartyId:returnHeader.vendorPartyId, toPartyId:returnHeader.customerPartyId,
@@ -916,11 +916,11 @@ along with this software (see the LICENSE.md file). If not, see
                                     in-map="[returnId:returnId, returnItemSeqId:returnItem.returnItemSeqId]"/></if>
                     </iterate>
 
-                    <!-- TODO: if CC do refund Payment via gateway; may need new code that
+                    &lt;!&ndash; TODO: if CC do refund Payment via gateway; may need new code that
                         - add Payment.refundForPaymentId and refund against that CC Payment
                         - if multiple original payments may need to split refund across multiple CC payments
-                    -->
-                </if>
+                    &ndash;&gt;
+                </if>-->
             </if>
 
             <!-- Replace (Order); consolidate all -->
@@ -1010,9 +1010,9 @@ along with this software (see the LICENSE.md file). If not, see
             </iterate>
 
             <!-- if returnInvoiceId set statusId to InvoiceApproved, trigger payment applications based on forInvoiceId -->
-            <if condition="returnInvoiceId">
+            <!--<if condition="returnInvoiceId">
                 <service-call name="update#mantle.account.invoice.Invoice" in-map="[invoiceId:returnInvoiceId, statusId:'InvoiceApproved']"/>
-            </if>
+            </if>-->
         </actions>
     </service>
 
@@ -1242,7 +1242,7 @@ along with this software (see the LICENSE.md file). If not, see
 
                         <!-- for existing ReturnItemBilling set the shipmentId on it -->
                         <set field="quantityNotBilled" from="quantityToReceive"/>
-                        <entity-find entity-name="mantle.order.return.ReturnItemBilling" list="returnItemBillingList">
+                        <!--<entity-find entity-name="mantle.order.return.ReturnItemBilling" list="returnItemBillingList">
                             <econdition field-name="returnId"/><econdition field-name="returnItemSeqId" from="returnItem.returnItemSeqId"/>
                         </entity-find>
                         <iterate list="returnItemBillingList" entry="returnItemBilling">
@@ -1251,7 +1251,7 @@ along with this software (see the LICENSE.md file). If not, see
                                 <entity-update value-field="returnItemBilling"/>
                                 <set field="quantityNotBilled" from="quantityNotBilled - returnItemBilling.quantity"/>
                             </if>
-                        </iterate>
+                        </iterate>-->
                         <!-- if quantityNotBilled > 0 do anything here? we don't have another Invoice/Item with quantity to match... -->
                     </if>
                 </if>

@@ -953,10 +953,10 @@ along with this software (see the LICENSE.md file). If not, see
                     <set field="totalQuantity" from="totalQuantity + (orderItem.quantity ?: 1.0)"/>
                     <set field="totalAmount" from="totalAmount + ((orderItem.quantity ?: 1.0) * (orderItem.unitAmount ?: 0.0))"/>
 
-                    <entity-find-one entity-name="mantle.product.ProductDimension" value-field="shippingWeight">
+                    <!--<entity-find-one entity-name="mantle.product.ProductDimension" value-field="shippingWeight">
                         <field-map field-name="productId" from="orderItem.productId"/>
                         <field-map field-name="dimensionTypeId" value="ShippingWeight"/>
-                    </entity-find-one>
+                    </entity-find-one>-->
                     <!-- TODO: this assumes all weights are the same unit, add some unit conversion to a standard like WT_lb -->
                     <!-- NOTE: this defaults to 1, maybe make this configurable somehow -->
                     <set field="totalWeight" from="totalWeight + ((shippingWeight?.value ?: 1.0) * orderItem.quantity)"/>

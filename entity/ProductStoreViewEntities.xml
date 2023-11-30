@@ -43,14 +43,14 @@ along with this software (see the LICENSE.md file). If not, see
         <alias name="shipmentId" entity-alias="SIS"/>
     </view-entity>
 
-    <view-entity entity-name="ProductStorePromoProductDetail" package="mantle.product.store">
+    <!--<view-entity entity-name="ProductStorePromoProductDetail" package="mantle.product.store">
         <member-entity entity-alias="PSPP" entity-name="mantle.product.store.ProductStorePromoProduct"/>
         <member-relationship entity-alias="PROD" join-from-alias="PSPP" relationship="product"/>
         <alias-all entity-alias="PSPP"/>
         <alias-all entity-alias="PROD"/>
-    </view-entity>
+    </view-entity>-->
 
-    <view-entity entity-name="OrderPromoCodeDetail" package="mantle.product.store">
+    <!--<view-entity entity-name="OrderPromoCodeDetail" package="mantle.product.store">
         <member-entity entity-alias="OPC" entity-name="mantle.order.OrderPromoCode"/>
         <member-relationship entity-alias="PSPC" join-from-alias="OPC" relationship="storePromoCode"/>
         <member-relationship entity-alias="PSP" join-from-alias="PSPC" relationship="storePromotion"/>
@@ -64,20 +64,5 @@ along with this software (see the LICENSE.md file). If not, see
         <alias name="promoThruDate" field="thruDate" entity-alias="PSP"/>
         <alias name="itemDescription" entity-alias="PSP"/>
         <alias name="productStoreId" entity-alias="PSP"/>
-    </view-entity>
-    <view-entity entity-name="PartyPromoCodeDetail" package="mantle.product.store">
-        <member-entity entity-alias="PSPCP" entity-name="mantle.product.store.ProductStorePromoCodeParty"/>
-        <member-relationship entity-alias="PSPC" join-from-alias="PSPCP" relationship="storePromoCode"/>
-        <member-relationship entity-alias="PSP" join-from-alias="PSPC" relationship="storePromotion"/>
-        <alias name="partyId" entity-alias="PSPCP"/>
-        <alias name="promoCodeId" entity-alias="PSPCP"/>
-        <alias name="promoCode" entity-alias="PSPC"/>
-        <alias name="storePromotionId" entity-alias="PSPC"/>
-        <alias name="fromDate" entity-alias="PSPC"/>
-        <alias name="thruDate" entity-alias="PSPC"/>
-        <alias name="promoFromDate" field="fromDate" entity-alias="PSP"/>
-        <alias name="promoThruDate" field="thruDate" entity-alias="PSP"/>
-        <alias name="itemDescription" entity-alias="PSP"/>
-        <alias name="productStoreId" entity-alias="PSP"/>
-    </view-entity>
+    </view-entity>-->
 </entities>

@@ -575,11 +575,11 @@ along with this software (see the LICENSE.md file). If not, see
                 commCount = ec.entity.find("mantle.party.communication.CommunicationEvent").condition("fromPartyId", fromPartyId).updateAll([fromPartyId:toPartyId])
                 commCount += ec.entity.find("mantle.party.communication.CommunicationEvent").condition("toPartyId", fromPartyId).updateAll([toPartyId:toPartyId])
                 if (commCount) ec.message.addMessage("Moved ${commCount} Communication Events from Party ${fromPartyId} to ${toPartyId}")
-
+/*
                 // PaymentMethod
                 methodCount = ec.entity.find("mantle.account.method.PaymentMethod").condition("ownerPartyId", fromPartyId).updateAll([ownerPartyId:toPartyId])
                 if (methodCount) ec.message.addMessage("Moved ${methodCount} Payment Methods from Party ${fromPartyId} to ${toPartyId}")
-
+*/
                 // OrderPart
                 orderCount = ec.entity.find("mantle.order.OrderPart").condition("vendorPartyId", fromPartyId).updateAll([vendorPartyId:toPartyId])
                 orderCount += ec.entity.find("mantle.order.OrderPart").condition("customerPartyId", fromPartyId).updateAll([customerPartyId:toPartyId])
@@ -597,7 +597,7 @@ along with this software (see the LICENSE.md file). If not, see
                 if (shipmentCount) ec.message.addMessage("Moved ${shipmentCount} Shipments from Party ${fromPartyId} to ${toPartyId}")
 
                 // Invoice
-                invoiceCount = ec.entity.find("mantle.account.invoice.Invoice").condition("fromPartyId", fromPartyId).updateAll([fromPartyId:toPartyId])
+                /*invoiceCount = ec.entity.find("mantle.account.invoice.Invoice").condition("fromPartyId", fromPartyId).updateAll([fromPartyId:toPartyId])
                 invoiceCount += ec.entity.find("mantle.account.invoice.Invoice").condition("toPartyId", fromPartyId).updateAll([toPartyId:toPartyId])
                 for (EntityValue inp in ec.entity.find("mantle.account.invoice.InvoiceParty").condition("partyId", fromPartyId).list()) {
                     EntityValue newInp = inp.cloneValue()
@@ -611,7 +611,7 @@ along with this software (see the LICENSE.md file). If not, see
                 paymentCount = ec.entity.find("mantle.account.payment.Payment").condition("fromPartyId", fromPartyId).updateAll([fromPartyId:toPartyId])
                 paymentCount += ec.entity.find("mantle.account.payment.Payment").condition("toPartyId", fromPartyId).updateAll([toPartyId:toPartyId])
                 if (paymentCount) ec.message.addMessage("Moved ${paymentCount} Payments from Party ${fromPartyId} to ${toPartyId}")
-
+                */
                 if (!eecaWasDisabled) ec.artifactExecution.enableEntityEca()
             ]]></script>
 

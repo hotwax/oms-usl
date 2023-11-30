@@ -212,8 +212,6 @@ along with this software (see the LICENSE.md file). If not, see
             If a contactMechPurposeId is passed in it will only update for that purpose, otherwise it will update for
             all purposes.
 
-            NOTE: if you want to update the ContactMech.paymentFraudEvidenceId or .trustLevelEnumId fields, do so
-            directly on the ContactMech entity (do not use this service).
         </description>
         <in-parameters>
             <auto-parameters entity-name="mantle.party.contact.PostalAddress" include="nonpk"/>
@@ -275,7 +273,6 @@ along with this software (see the LICENSE.md file). If not, see
             <set field="newContactMech.gatewayCimId" from="null"/>
             <set field="newContactMech.trustLevelEnumId" value="CmtlNew"/>
             <set field="newContactMech.validateMessage" from="null"/>
-            <set field="newContactMech.paymentFraudEvidenceId" from="null"/>
             <entity-sequenced-id-primary value-field="newContactMech"/>
             <entity-create value-field="newContactMech"/>
 
@@ -311,8 +308,6 @@ along with this software (see the LICENSE.md file). If not, see
             If a contactMechPurposeId is passed in it will only update for that purpose, otherwise it will update for
             all purposes.
 
-            NOTE: if you want to update the ContactMech.paymentFraudEvidenceId or .trustLevelEnumId fields, do so
-            directly on the ContactMech entity (do not use this service).
         </description>
         <in-parameters>
             <auto-parameters entity-name="mantle.party.contact.TelecomNumber" include="nonpk"/>
@@ -351,7 +346,6 @@ along with this software (see the LICENSE.md file). If not, see
             <set field="newContactMech.gatewayCimId" from="null"/>
             <set field="newContactMech.trustLevelEnumId" value="CmtlNew"/>
             <set field="newContactMech.validateMessage" from="null"/>
-            <set field="newContactMech.paymentFraudEvidenceId" from="null"/>
             <entity-sequenced-id-primary value-field="newContactMech"/>
             <entity-create value-field="newContactMech"/>
 
@@ -386,8 +380,6 @@ along with this software (see the LICENSE.md file). If not, see
             If a contactMechPurposeId is passed in it will only update for that purpose, otherwise it will update for
             all purposes.
 
-            NOTE: if you want to update the ContactMech.paymentFraudEvidenceId or .trustLevelEnumId fields, do so
-            directly on the ContactMech entity (do not use this service).
         </description>
         <in-parameters>
             <parameter name="infoString" required="true"/>
@@ -430,7 +422,6 @@ along with this software (see the LICENSE.md file). If not, see
             <set field="newContactMech.gatewayCimId" from="null"/>
             <set field="newContactMech.trustLevelEnumId" value="CmtlNew"/>
             <set field="newContactMech.validateMessage" from="null"/>
-            <set field="newContactMech.paymentFraudEvidenceId" from="null"/>
             <entity-sequenced-id-primary value-field="newContactMech"/>
             <entity-create value-field="newContactMech"/>
 

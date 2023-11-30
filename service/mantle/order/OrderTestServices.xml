@@ -97,16 +97,16 @@ along with this software (see the LICENSE.md file). If not, see
                                 ec.logger.warn("Add order ${orderId} item ${itemIdx} product ${productId} quantity ${itemQuantity}")
                             }
 
-                            String paymentMethodId = null, paymentInstrumentEnumId = null, shippingPostalContactMechId = null
+                            //String paymentMethodId = null, paymentInstrumentEnumId = null, shippingPostalContactMechId = null
                             if (customerPartyId == 'CustJqp') {
-                                paymentMethodId = 'CustJqpCc'
+                                //paymentMethodId = 'CustJqpCc'
                                 shippingPostalContactMechId = 'CustJqpAddr'
                             } else {
                                 // find payment method or default to check instrument
-                                def ccPaymentMethod = ec.entity.find("mantle.account.method.PaymentMethod").condition("ownerPartyId", customerPartyId)
+                                /*def ccPaymentMethod = ec.entity.find("mantle.account.method.PaymentMethod").condition("ownerPartyId", customerPartyId)
                                         .condition("paymentMethodTypeEnumId", "PmtCreditCard").one()
                                 if (ccPaymentMethod != null) paymentMethodId = ccPaymentMethod.paymentMethodId
-                                else paymentInstrumentEnumId = 'PiPersonalCheck'
+                                else paymentInstrumentEnumId = 'PiPersonalCheck'/*
 
                                 // find shipping/primary address or default to ???
                                 def shippingPcm = ec.entity.find("mantle.party.contact.PartyContactMech").condition("partyId", customerPartyId)

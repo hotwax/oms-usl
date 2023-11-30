@@ -765,8 +765,6 @@ along with this software (see the LICENSE.md file). If not, see
             passed this will create new ContactMech and TelecomNumber records but not associate them with the Party (to support
             TelecomNumber used only for PostalAddress, etc that refer to it directly).
 
-            NOTE: if you want to update the ContactMech.paymentFraudEvidenceId, trustLevelEnumId, etc fields then use
-            the update#ContactMechMutable service (do not use this service).
         </description>
         <in-parameters>
             <auto-parameters entity-name="mantle.party.contact.PostalAddress" include="nonpk"/>
@@ -822,16 +820,16 @@ along with this software (see the LICENSE.md file). If not, see
                     <!-- NOTE: do without <date-filter/>, allow if address has ever been associated with Party -->
                     <econdition field-name="partyId"/><econdition field-name="contactMechId"/>
                 </entity-find>
-                <if condition="!origPcmList">
-                    <!-- try PaymentMethod association to party -->
+                <!--<if condition="!origPcmList">
+                    &lt;!&ndash; try PaymentMethod association to party &ndash;&gt;
                     <entity-find entity-name="mantle.account.method.PaymentMethod" list="payMethList">
-                        <!-- NOTE: do without <date-filter/>, allow if number has ever been associated with Party -->
+                        &lt;!&ndash; NOTE: do without <date-filter/>, allow if number has ever been associated with Party &ndash;&gt;
                         <econdition field-name="ownerPartyId" from="partyId"/>
                         <econdition field-name="postalContactMechId" from="contactMechId"/>
                     </entity-find>
                     <if condition="!payMethList">
                         <return error="true" message="Postal Address ${contactMechId} is not associated with party ${partyId}, not updating."/></if>
-                </if>
+                </if>-->
                 <filter-map-list list="origPcmList"><date-filter/></filter-map-list>
                 <filter-map-list list="origPcmList"><field-map field-name="contactMechPurposeId"/></filter-map-list>
             </if>
@@ -843,7 +841,6 @@ along with this software (see the LICENSE.md file). If not, see
             <set field="newContactMech.gatewayCimId" from="null"/>
             <set field="newContactMech.trustLevelEnumId" value="CmtlNew"/>
             <set field="newContactMech.validateMessage" from="null"/>
-            <set field="newContactMech.paymentFraudEvidenceId" from="null"/>
             <entity-sequenced-id-primary value-field="newContactMech"/>
             <entity-create value-field="newContactMech"/>
             <set field="contactMechId" from="newContactMech.contactMechId"/>
@@ -1068,8 +1065,6 @@ along with this software (see the LICENSE.md file). If not, see
             passed this will create new ContactMech and TelecomNumber records but not associate them with the Party (to support
             TelecomNumber used only for PostalAddress, etc that refer to it directly).
 
-            NOTE: if you want to update the ContactMech.paymentFraudEvidenceId or .trustLevelEnumId fields, do so
-            with the update#ContactMechMutable service (do not use this service).
         </description>
         <in-parameters>
             <auto-parameters entity-name="mantle.party.contact.TelecomNumber" include="nonpk"/>
@@ -1096,16 +1091,16 @@ along with this software (see the LICENSE.md file). If not, see
                     <!-- NOTE: do without <date-filter/>, allow if number has ever been associated with Party -->
                     <econdition field-name="partyId"/><econdition field-name="contactMechId"/>
                 </entity-find>
-                <if condition="!origPcmList">
-                    <!-- try PaymentMethod association to party -->
+                <!--<if condition="!origPcmList">
+                    &lt;!&ndash; try PaymentMethod association to party &ndash;&gt;
                     <entity-find entity-name="mantle.account.method.PaymentMethod" list="payMethList">
-                        <!-- NOTE: do without <date-filter/>, allow if number has ever been associated with Party -->
+                        &lt;!&ndash; NOTE: do without <date-filter/>, allow if number has ever been associated with Party &ndash;&gt;
                         <econdition field-name="ownerPartyId" from="partyId"/>
                         <econdition field-name="telecomContactMechId" from="contactMechId"/>
                     </entity-find>
                     <if condition="!payMethList">
                         <return error="true" message="Telecom Number with ID ${contactMechId} is not associated with party ${partyId}, not updating."/></if>
-                </if>
+                </if>-->
                 <filter-map-list list="origPcmList"><date-filter/></filter-map-list>
                 <filter-map-list list="origPcmList"><field-map field-name="contactMechPurposeId"/></filter-map-list>
             </if>
@@ -1132,7 +1127,6 @@ along with this software (see the LICENSE.md file). If not, see
             <set field="newContactMech.gatewayCimId" from="null"/>
             <set field="newContactMech.trustLevelEnumId" from="trustLevelEnumId"/>
             <set field="newContactMech.validateMessage" from="null"/>
-            <set field="newContactMech.paymentFraudEvidenceId" from="null"/>
             <entity-sequenced-id-primary value-field="newContactMech"/>
             <entity-create value-field="newContactMech"/>
 
@@ -1322,8 +1316,6 @@ along with this software (see the LICENSE.md file). If not, see
             passed this will create a new ContactMech record but not associate them with the Party (to support
             ContactMech used only for PostalAddress, etc that refer to it directly).
 
-            NOTE: if you want to update the ContactMech.paymentFraudEvidenceId or .trustLevelEnumId fields, do so
-            with the update#ContactMechMutable service (do not use this service).
         </description>
         <in-parameters>
             <parameter name="infoString" required="true"/>
@@ -1350,16 +1342,16 @@ along with this software (see the LICENSE.md file). If not, see
                     <!-- NOTE: do without <date-filter/>, allow if contact mech has ever been associated with Party -->
                     <econdition field-name="partyId"/><econdition field-name="contactMechId"/>
                 </entity-find>
-                <if condition="!origPcmList">
-                    <!-- try PaymentMethod association to party -->
+                <!--<if condition="!origPcmList">
+                    &lt;!&ndash; try PaymentMethod association to party &ndash;&gt;
                     <entity-find entity-name="mantle.account.method.PaymentMethod" list="payMethList">
-                        <!-- NOTE: do without <date-filter/>, allow if number has ever been associated with Party -->
+                        &lt;!&ndash; NOTE: do without <date-filter/>, allow if number has ever been associated with Party &ndash;&gt;
                         <econdition field-name="ownerPartyId" from="partyId"/>
                         <econdition field-name="emailContactMechId" from="contactMechId"/>
                     </entity-find>
                     <if condition="!payMethList">
                         <return error="true" message="Contact Info with ID ${contactMechId} is not associated with party ${partyId}, not updating."/></if>
-                </if>
+                </if>-->
                 <filter-map-list list="origPcmList"><date-filter/></filter-map-list>
                 <filter-map-list list="origPcmList"><field-map field-name="contactMechPurposeId"/></filter-map-list>
             </if>
@@ -1370,7 +1362,6 @@ along with this software (see the LICENSE.md file). If not, see
             <set field="newContactMech.gatewayCimId" from="null"/>
             <set field="newContactMech.trustLevelEnumId" value="CmtlNew"/>
             <set field="newContactMech.validateMessage" from="null"/>
-            <set field="newContactMech.paymentFraudEvidenceId" from="null"/>
             <entity-sequenced-id-primary value-field="newContactMech"/>
             <entity-create value-field="newContactMech"/>
 
@@ -1401,7 +1392,6 @@ along with this software (see the LICENSE.md file). If not, see
             <parameter name="dataSourceId"/>
             <parameter name="trustLevelEnumId"/>
             <parameter name="validateMessage"/>
-            <parameter name="paymentFraudEvidenceId"/>
         </in-parameters>
         <actions>
             <service-call name="update#mantle.party.contact.ContactMech" in-map="context"/>
